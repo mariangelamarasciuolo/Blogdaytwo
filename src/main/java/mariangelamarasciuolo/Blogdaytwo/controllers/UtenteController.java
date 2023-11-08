@@ -2,6 +2,7 @@ package mariangelamarasciuolo.Blogdaytwo.controllers;
 
 import mariangelamarasciuolo.Blogdaytwo.entities.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import services.UtenteService;
@@ -14,8 +15,11 @@ public class UtenteController {
     @Autowired
     private UtenteService utenteService;
     @GetMapping("")
-    public List<Utente> getUtente(){
-        return utenteService.getUtente();
+    public Page<Utente> getUtente(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int size,
+                                  @RequestParam(defaultValue = "id") String orderBy){
+
+        return utenteService.getUtente(page, size, orderBy);
     }
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED) // <-- 201
