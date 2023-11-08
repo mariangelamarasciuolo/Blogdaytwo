@@ -1,0 +1,41 @@
+package mariangelamarasciuolo.Blogdaytwo.controllers;
+
+import mariangelamarasciuolo.Blogdaytwo.entities.Utente;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import services.UtenteService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/utenti")
+public class UtenteController {
+    @Autowired
+    private UtenteService utenteService;
+    @GetMapping("")
+    public List<Utente> getUtente(){
+        return utenteService.getUtente();
+    }
+    @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED) // <-- 201
+    public Utente saveUtente(@RequestBody Utente body){
+        return utenteService.save(body);
+    }
+
+    @GetMapping("/{id}")
+    public Utente findById(@PathVariable int id) {
+        return utenteService.findById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Utente findAndUpdateById(@PathVariable int id, @RequestBody Utente body){
+        return utenteService.findAndUpdateById(id,body);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
+    public void findAndDeleteById(@PathVariable int id){
+     utenteService.findAndDeleteById(id);
+    }
+}
